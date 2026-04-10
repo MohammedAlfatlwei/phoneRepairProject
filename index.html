@@ -16,7 +16,10 @@
         <input type="text" id="name" required><br><br>
 
         <label>Phone Number:</label><br>
-        <input type="text" id="phone" required><br><br>
+        <input type="tel" id="phone" name="phone" placeholder="07XXXXXXXXX" pattern="07[0-9]{9}" maxlength="11"
+            required>
+        <small id="phoneError" style="color:red;"></small>
+        <br><br>
 
         <label>Phone Model:</label><br>
         <input type="text" id="device" required><br><br>

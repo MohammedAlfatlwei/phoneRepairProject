@@ -86,3 +86,32 @@ userInput.addEventListener("keypress", function (e) {
         sendMessage();
     }
 });
+
+
+
+//  phone number validation and formatting
+const phoneInput = document.getElementById("phone");
+const phoneError = document.getElementById("phoneError");
+
+// Allow only numbers
+phoneInput.addEventListener("input", function () {
+    this.value = this.value.replace(/[^0-9]/g, '');
+
+    if (this.value.length > 11) {
+        this.value = this.value.slice(0, 11);
+    }
+});
+
+
+function validatePhone() {
+    const phone = phoneInput.value;
+    const regex = /^07[0-9]{9}$/;
+
+    if (!regex.test(phone)) {
+        phoneError.innerText = "Phone must start with 07 and be 11 digits.";
+        return false;
+    }
+
+    phoneError.innerText = "";
+    return true;
+}
