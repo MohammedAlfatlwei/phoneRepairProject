@@ -24,3 +24,65 @@ document.getElementById("repairForm").addEventListener("submit", function (event
     window.open(whatsappURL, "_blank");
 
 });
+
+// Elements
+const chatButton = document.getElementById("chatButton");
+const chatBox = document.getElementById("chatBox");
+const closeChat = document.getElementById("closeChat");
+const sendBtn = document.getElementById("sendBtn");
+const userInput = document.getElementById("userInput");
+const chatMessages = document.getElementById("chatMessages");
+
+// Open / Close
+chatButton.onclick = () => {
+    chatBox.style.display = "flex";
+};
+
+closeChat.onclick = () => {
+    chatBox.style.display = "none";
+};
+
+// Add message bubble
+function addMessage(text, sender) {
+    const msg = document.createElement("div");
+    msg.classList.add("message", sender);
+    msg.innerText = text;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Send message
+async function sendMessage() {
+
+    const text = userInput.value.trim();
+    if (text === "") return;
+
+    addMessage(text, "user");
+    userInput.value = "";
+
+    const typingMsg = document.createElement("div");
+    typingMsg.classList.add("message", "bot");
+    typingMsg.innerText = "Typing...";
+    chatMessages.appendChild(typingMsg);
+
+    try {
+        const response = await puter.ai.chat(text);
+
+        typingMsg.remove();
+        addMessage(response, "bot");
+
+    } catch (error) {
+        console.error(error);
+        typingMsg.innerText = "Error.";
+    }
+}
+
+// Button click
+sendBtn.onclick = sendMessage;
+
+// Enter key
+userInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        sendMessage();
+    }
+});

@@ -27,14 +27,34 @@
             <option>Battery Replacement</option>
             <option>Diagnosis</option>
         </select><br><br>
-
         <label>Location:</label><br>
         <input type="text" id="location" required><br><br>
 
         <button type="submit">Send via WhatsApp</button>
-
     </form>
 
+    <!-- Chat Button -->
+    <div id="chatButton">💬</div>
+
+    <!-- Chat Box -->
+    <div id="chatBox">
+
+        <div id="chatHeader">
+            Chat Support
+            <span id="closeChat">✖</span>
+        </div>
+
+        <div id="chatMessages"></div>
+
+        <div id="chatInputArea">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button id="sendBtn">Send</button>
+        </div>
+
+    </div>
+
+
+    <script src="https://js.puter.com/v2/"></script>
     <!-- Link JavaScript file -->
     <script src="script.js"></script>
 
