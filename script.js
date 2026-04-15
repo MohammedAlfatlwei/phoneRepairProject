@@ -11,7 +11,7 @@ document.getElementById("repairForm").addEventListener("submit", function (event
     const service = document.getElementById("service").value;
     const location = document.getElementById("location").value;
 
-    // 🔴 VALIDATION
+
     if (!validatePhone()) return;
 
     if (location === "") {
