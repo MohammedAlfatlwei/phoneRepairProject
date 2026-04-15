@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['logged_in'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+<?php
 $conn = new mysqli("localhost", "root", "", "mrsm_system");
 
 if ($conn->connect_error) {
@@ -43,6 +51,7 @@ $result = $conn->query("SELECT * FROM repair_requests ORDER BY id DESC");
 <body>
 
 <h1>📊 Repair Requests Dashboard</h1>
+<a href="logout.php">Logout</a>
 
 <?php while($row = $result->fetch_assoc()) { ?>
 
@@ -57,7 +66,7 @@ $result = $conn->query("SELECT * FROM repair_requests ORDER BY id DESC");
         <a href="<?php echo $row['location']; ?>" target="_blank">Open Map</a>
     </p>
 
-    <p><strong>Date:</strong> <?php echo $row['created_at']; ?></p>
+    <p><strong>Date:</strong><?php echo date("d/m/Y", strtotime($row['created_at'])); ?></p>
     
     <form method="POST" action="delete.php">
         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
@@ -65,7 +74,10 @@ $result = $conn->query("SELECT * FROM repair_requests ORDER BY id DESC");
     </form>
 </div>
 
+
+
 <?php } ?>
+
 
 </body>
 </html>
