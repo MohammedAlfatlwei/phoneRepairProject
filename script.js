@@ -1,31 +1,48 @@
+// ================= FORM SUBMIT =================
 document.getElementById("repairForm").addEventListener("submit", function (event) {
 
     event.preventDefault();
 
-    var name = document.getElementById("name").value;
-    var phone = document.getElementById("phone").value;
-    var device = document.getElementById("device").value;
-    var service = document.getElementById("service").value;
-    var location = document.getElementById("location").value;
+    const form = this;
 
-    var message = "New Repair Request\n\n"
-        + "Name: " + name + "\n"
-        + "Phone: " + phone + "\n"
-        + "Device: " + device + "\n"
-        + "Service: " + service + "\n"
-        + "Location: " + location;
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const device = document.getElementById("device").value;
+    const service = document.getElementById("service").value;
+    const location = document.getElementById("location").value;
 
-    var encodedMessage = encodeURIComponent(message);
+    // 🔴 VALIDATION
+    if (!validatePhone()) return;
 
-    var yourWhatsAppNumber = "9647838100473";
+    if (location === "") {
+        alert("Please click 'Get My Location' first");
+        return;
+    }
 
-    var whatsappURL = "https://wa.me/" + yourWhatsAppNumber + "?text=" + encodedMessage + "\nLocation:\n" + locationInput.value;
+    // ✅ WhatsApp message
+    const message =
+        "New Repair Request\n\n" +
+        "Name: " + name + "\n" +
+        "Phone: " + phone + "\n" +
+        "Device: " + device + "\n" +
+        "Service: " + service + "\n\n" +
+        "Location:\n" + location;
 
+    const encodedMessage = encodeURIComponent(message);
+
+    const whatsappURL = "https://wa.me/9647838100473?text=" + encodedMessage;
+
+    // ✅ Open WhatsApp
     window.open(whatsappURL, "_blank");
 
+    // ✅ Submit to database AFTER WhatsApp (safe way)
+    setTimeout(() => {
+        form.submit();   // 🔥 fixed (no event.target confusion)
+    }, 300);
 });
 
-// Elements
+
+// ================= CHATBOT =================
 const chatButton = document.getElementById("chatButton");
 const chatBox = document.getElementById("chatBox");
 const closeChat = document.getElementById("closeChat");
@@ -33,7 +50,6 @@ const sendBtn = document.getElementById("sendBtn");
 const userInput = document.getElementById("userInput");
 const chatMessages = document.getElementById("chatMessages");
 
-// Open / Close
 chatButton.onclick = () => {
     chatBox.style.display = "flex";
 };
@@ -42,7 +58,6 @@ closeChat.onclick = () => {
     chatBox.style.display = "none";
 };
 
-// Add message bubble
 function addMessage(text, sender) {
     const msg = document.createElement("div");
     msg.classList.add("message", sender);
@@ -51,7 +66,6 @@ function addMessage(text, sender) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Send message
 async function sendMessage() {
 
     const text = userInput.value.trim();
@@ -66,7 +80,9 @@ async function sendMessage() {
     chatMessages.appendChild(typingMsg);
 
     try {
-        const response = await puter.ai.chat(text);
+        const response = await puter.ai.chat(
+            "You are a mobile repair assistant. Help users choose repair types.\nUser: " + text
+        );
 
         typingMsg.remove();
         addMessage(response, "bot");
@@ -77,10 +93,8 @@ async function sendMessage() {
     }
 }
 
-// Button click
 sendBtn.onclick = sendMessage;
 
-// Enter key
 userInput.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         sendMessage();
@@ -88,20 +102,16 @@ userInput.addEventListener("keypress", function (e) {
 });
 
 
-
-//  phone number validation and formatting
+// ================= PHONE VALIDATION =================
 const phoneInput = document.getElementById("phone");
 const phoneError = document.getElementById("phoneError");
 
-// Allow only numbers
 phoneInput.addEventListener("input", function () {
     this.value = this.value.replace(/[^0-9]/g, '');
-
     if (this.value.length > 11) {
         this.value = this.value.slice(0, 11);
     }
 });
-
 
 function validatePhone() {
     const phone = phoneInput.value;
@@ -117,7 +127,7 @@ function validatePhone() {
 }
 
 
-// Get location
+// ================= GPS LOCATION =================
 const locationBtn = document.getElementById("getLocationBtn");
 const locationInput = document.getElementById("location");
 
@@ -138,12 +148,13 @@ locationBtn.onclick = function () {
             const mapsLink = "https://maps.google.com/?q=" + lat + "," + lon;
 
             locationInput.value = mapsLink;
+
+            locationBtn.innerText = "تم ارسال الموقع";
+
         },
 
-        function (error) {
+        function () {
             alert("Location permission denied");
         }
-
     );
 };
-
