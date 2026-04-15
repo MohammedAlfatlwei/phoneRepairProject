@@ -11,7 +11,85 @@
 
     <form id="repairForm" action="save.php" method="POST">
 
+        <label>الاسم:</label><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile Repair services</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="admin.php" style="position:absolute; top:10px; right:10px; " target="_blank" class="admin-btn">
+        Admin Panel
+    </a>
+
+    <form id="repairForm" action="save.php" method="POST">
+
         <label>الاسم:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label>رقم الهاتف:</label><br>
+        <input type="tel" id="phone" name="phone" placeholder="07" pattern="07[0-9]{9}" maxlength="11" required>
+        <small id="phoneError" style="color:red;"></small>
+        <br><br>
+
+        <label>نوع الهاتف:</label><br>
+        <input type="text" id="device" name="device" required><br><br>
+
+        <label>نوع الخدمة:</label><br>
+        <select id="service" name="service" required>
+            <option value="Screen Replacement">استبدال شاشة</option>
+            <option value="Battery Replacement">استبدال بطارية</option>
+            <option value="Diagnosis">عطل داخلي</option>
+        </select><br><br>
+
+        <label>الموقع:</label><br>
+        <button type="button" id="getLocationBtn">ارسال الموقع</button>
+        <input type="hidden" id="location" name="location">
+        <br><br>
+
+        <!-- 🔥 IMPORTANT: make this type=submit -->
+        <button type="submit">ارسال عن طريق واتساب</button>
+
+    </form>
+
+
+    <!-- Chat Button -->
+    <div id="chatButton">AI</div>
+
+    <!-- Chat Box -->
+    <div id="chatBox">
+
+        <div id="chatHeader">
+            Chat Support
+            <!-- better symbol -->
+            <span id="closeChat">&times;</span>
+        </div>
+
+        <div id="chatMessages"></div>
+
+        <div id="chatInputArea">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <!-- 🔥 IMPORTANT: prevent form submit -->
+            <button type="button" id="sendBtn">Send</button>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- Puter AI -->
+    <script src="https://js.puter.com/v2/"></script>
+
+    <!-- Your script -->
+    <script src="script.js"></script>
+
+</body>
+
+</html><br>
         <input type="text" id="name" name="name" required><br><br>
 
         <label>رقم الهاتف:</label><br>
