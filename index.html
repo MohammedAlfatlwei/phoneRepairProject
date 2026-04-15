@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 
 <head>
-    <title>Mobile Repair Request</title>
+    <meta charset="UTF-8">
+    <title>Mobile Repair services</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,26 +11,25 @@
 
     <form id="repairForm" action="save.php" method="POST">
 
-        <label>Name:</label><br>
+        <label>الاسم:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
-        <label>Phone Number:</label><br>
-        <input type="tel" id="phone" name="phone" placeholder="07XXXXXXXXX" pattern="07[0-9]{9}" maxlength="11"
-            required>
+        <label>رقم الهاتف:</label><br>
+        <input type="tel" id="phone" name="phone" placeholder="07" pattern="07[0-9]{9}" maxlength="11" required>
         <small id="phoneError" style="color:red;"></small>
         <br><br>
 
-        <label>Phone Model:</label><br>
+        <label>نوع الهاتف:</label><br>
         <input type="text" id="device" name="device" required><br><br>
 
-        <label>Service Type:</label><br>
+        <label>نوع الخدمة:</label><br>
         <select id="service" name="service" required>
-            <option value="Screen Replacement">Screen Replacement</option>
-            <option value="Battery Replacement">Battery Replacement</option>
-            <option value="Diagnosis">Diagnosis</option>
+            <option value="Screen Replacement">استبدال شاشة</option>
+            <option value="Battery Replacement">استبدال بطارية</option>
+            <option value="Diagnosis">عطل داخلي</option>
         </select><br><br>
 
-        <label>Location:</label><br>
+        <label>الموقع:</label><br>
         <button type="button" id="getLocationBtn">ارسال الموقع</button>
         <input type="hidden" id="location" name="location">
         <br><br>
