@@ -19,7 +19,7 @@ document.getElementById("repairForm").addEventListener("submit", function (event
 
     var yourWhatsAppNumber = "9647838100473";
 
-    var whatsappURL = "https://wa.me/" + yourWhatsAppNumber + "?text=" + encodedMessage;
+    var whatsappURL = "https://wa.me/" + yourWhatsAppNumber + "?text=" + encodedMessage + "\nLocation:\n" + locationInput.value;
 
     window.open(whatsappURL, "_blank");
 
@@ -115,3 +115,35 @@ function validatePhone() {
     phoneError.innerText = "";
     return true;
 }
+
+
+// Get location
+const locationBtn = document.getElementById("getLocationBtn");
+const locationInput = document.getElementById("location");
+
+locationBtn.onclick = function () {
+
+    if (!navigator.geolocation) {
+        alert("Geolocation not supported");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        function (position) {
+
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            const mapsLink = "https://maps.google.com/?q=" + lat + "," + lon;
+
+            locationInput.value = mapsLink;
+        },
+
+        function (error) {
+            alert("Location permission denied");
+        }
+
+    );
+};
+
