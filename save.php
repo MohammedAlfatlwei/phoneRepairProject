@@ -5,7 +5,6 @@ $conn = new mysqli("localhost", "root", "", "mrsm_system");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 $name = $_POST['name'];
 $phone = $_POST['phone'];
 $device = $_POST['device'];
